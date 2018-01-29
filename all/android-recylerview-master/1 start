@@ -47,3 +47,20 @@ Picasso.with(context)
                 .load(listData.get(position).getThumbnail_image())
                 .fit().centerCrop()
                 .into(holder.img);
+                
+                
+                
+                
+//pass data
+    private HashMap<String, String> dietPlanHashMap = new HashMap<>();
+    Intent i = new Intent(this, DietPlanStep2Activity.class);
+        i.putExtra("hashmap, dietPlanHashMap);
+        startActivity(i);
+        
+        
+        
+//get
+ Intent intent = getIntent();
+        if (intent != null) {
+            dietPlanHashMap = (HashMap<String, String>) intent.getSerializableExtra(StringConstant.I_DIET_PLAN_HASHMAP);
+        }
