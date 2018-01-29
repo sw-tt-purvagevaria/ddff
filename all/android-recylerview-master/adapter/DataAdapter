@@ -1,0 +1,71 @@
+package com.pg.demowebservice.adapter;
+
+import android.content.Context;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import com.pg.demowebservice.R;
+import com.pg.demowebservice.model.BeanClass;
+import com.squareup.picasso.Picasso;
+
+import java.util.List;
+
+/**
+ * Created by test on 10/10/17.
+ */
+
+public class DataAdapter extends RecyclerView.Adapter<DataAdapter.DataHolder> {
+
+    private String TAG = "ActivityAdapter";
+    private Context context;
+    private List<BeanClass.Data> listData;
+
+    public DataAdapter(Context context, List<BeanClass.Data> listData) {
+        this.context = context;
+        this.listData = listData;
+    }
+
+    @Override
+    public DataHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemLayoutView = LayoutInflater.from(context).inflate(R.layout.list_activity, parent, false);
+
+        // create ViewHolder
+        DataHolder viewHolder = new DataHolder(itemLayoutView);
+
+        return viewHolder;
+
+    }
+
+    @Override
+    public void onBindViewHolder(DataHolder holder, int position) {
+        if (!listData.get(position).getThumbnail_image().isEmpty()) {
+            Picasso.with(context)
+                    .load(listData.get(position).getThumbnail_image())
+                    .fit().centerCrop()
+                    .placeholder(R.color.colorAccent)
+                    .into(holder.img);
+        }
+
+    }
+
+
+    @Override
+    public int getItemCount() {
+        return listData.size();
+    }
+
+    public class DataHolder extends RecyclerView.ViewHolder {
+
+
+        public ImageView img;
+
+        public DataHolder(View itemView) {
+            super(itemView);
+            img = (ImageView) itemView.findViewById(R.id.img);
+
+        }
+    }
+}   //end of class WorkOutAdapter
