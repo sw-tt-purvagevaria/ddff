@@ -1,0 +1,34 @@
+ Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://portal.bodycarpenters.com/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+
+        ApiInterface api = retrofit.create(ApiInterface.class);
+        api.forgotPassword("37").enqueue(new Callback<ModelClass>() {
+            @Override
+            public void onResponse(Call<ModelClass> call, Response<ModelClass> response) {
+                ModelClass userResponse = response.body();
+                Log.d(TAG, "Data :: " + userResponse.getData().getLeaderboard().get(1).getName());
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ModelClass> call, Throwable t) {
+
+            }
+        });
+        
+        
+        
+        
+        interface
+        
+        
+    @GET("get_leaderboard.php?action=get_leaderboard")
+    Call<ModelClass> forgotPassword(@Query("member_id") String str);
+    
+    
+    Model
+     @Expose

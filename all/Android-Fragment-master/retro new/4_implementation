@@ -1,0 +1,20 @@
+   /**
+     * will call retrofit
+     */
+    private void calLRetrofitApi() {
+        ApiInterface apiService = APIClient.getClient().create(ApiInterface.class);
+        Call call = apiService.getLeaderBoardData("9");
+
+        call.enqueue(new Callback<TrainerModel>() {
+            @Override
+            public void onResponse(Call<TrainerModel> call, Response<TrainerModel> response) {
+               Log.d(TAG, "DATA :: " + response.body().getHeader().getStatus());
+            }
+
+            @Override
+            public void onFailure(Call<TrainerModel> call, Throwable t) {
+
+            }
+        });
+
+    }   //end of calLRetrofitApi

@@ -1,0 +1,8 @@
+ Intent intent = new Intent(this, MapHotelListActivity.class);
+intent.putExtra("HOTEL_ARRAY_LIST", alHotelList);
+startActivity(intent);
+
+ Intent intent = new Intent();
+        if (intent != null) {
+            arrayListHotel = (ArrayList<HotelListModel>) getIntent().getSerializableExtra("HOTEL_ARRAY_LIST");
+        }

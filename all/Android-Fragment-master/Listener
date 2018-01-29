@@ -1,0 +1,61 @@
+#)Activity to fragment :: 
+
+Activity class :
+ public interface FragmentCommunicator {
+        public void onDataPass(String data);
+    }
+
+
+FragmentCommunicator fragmentCommunicator;
+
+//Here is new method
+    public void passVal(FragmentCommunicator fragmentCommunicator) {
+        this.fragmentCommunicator = fragmentCommunicator;
+    }
+
+
+//Call when needed
+passVal(fragmentCommunicator);	//Pass object whenver is needed 
+fragmentCommunicator.onDataPass("data");
+==========================================================================================
+
+#)Fragment to activity ::
+
+ 1)public interface OnDataPass {
+        public void onDataPass(String data);
+    }
+
+
+ 2)   @Override
+    public void onAttach(Activity a) {
+        super.onAttach(a);
+        dataPasser = (OnDataPass) a;
+    }
+
+3) call whenever is needed
+dataPasser.onDataPass(StringConstant.HOME);
+
+==========================================================================================
+#)Send click or data from adapter to activity 
+Adapter code 
+
+ 1)   public interface DataTransferInterface {
+        public void setValues(String categoryId, String categoryName, String image);
+    }
+
+
+ 2) pass listener in constructor
+DataTransferInterface listener;	//declare
+  public ExerciseAdapter(Context context, View.OnClickListener onClickListener, ArrayList<ExerciseModel> arrayList, DataTransferInterface listener) {
+        this.context = context;
+        this.onClickListener = onClickListener;
+        this.arrayList = arrayList;
+  this.listener = listener;
+    }
+3) Call when needed 
+  listener.setValues(exerciseModel.getMasterId(), exerciseModel.getName(), exerciseModel.getImage());
+
+ 4)ExerciseAdapter.DataTransferInterface implments
+
+
+

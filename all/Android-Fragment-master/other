@@ -1,0 +1,4 @@
+  //Grid
+  
+ listWorkOut.setAdapter(new WorkOutAdapter(getActivity(), arrayListWorkOut, isWebserviceCall));
+listWorkOut.setLayoutManager(new GridLayoutManager(getActivity(), 2));
