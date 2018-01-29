@@ -48,6 +48,44 @@ public class IndexActivity extends ParentActivity implements OnMapReadyCallback 
      * will call webservice for get data
      */
     private void callWebservice() {
+        
+        
+         if (isNetworkAvailable(this)) {
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, "",
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+
+                        }
+                    }) {
+                @Override
+                protected Map<String, String> getParams() {
+
+                    return strParams;
+                }
+            };
+
+            RequestQueue mRequestQueue = Volley.newRequestQueue(this);
+            RetryPolicy policy = new DefaultRetryPolicy(10000, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+            stringRequest.setRetryPolicy(policy);
+            mRequestQueue.add(stringRequest);
+
+
+        } else {
+            Toast.makeText(this, "No netwrok available", Toast.LENGTH_SHORT).show();
+        }
+
+        
+        
+        
+        
+        
         // String BASE_URL = getResources().getString(R.string.BASE_URL);
         HashMap<String, String> params = new HashMap<>();
         params.put("action", "get_trainers");
@@ -121,4 +159,15 @@ public class IndexActivity extends ParentActivity implements OnMapReadyCallback 
         BeanClass subCategoryBean = gson.fromJson(jsonDataObj, BeanClass.class);
         return subCategoryBean;
     }//end o getProductDetailBeanFromJson
+    
+    
+    
+    
+    
+ public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }//end of isNetworkAvailable
+
 }
