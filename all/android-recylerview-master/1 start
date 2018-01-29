@@ -52,15 +52,14 @@ Picasso.with(context)
                 
                 
 //pass data
-    private HashMap<String, String> dietPlanHashMap = new HashMap<>();
-    Intent i = new Intent(this, DietPlanStep2Activity.class);
-        i.putExtra("hashmap, dietPlanHashMap);
-        startActivity(i);
-        
+Intent i = new Intent(this, MainActivity.class);
+i.putExtra("ARRAY_LIST", arrayList);
+startActivity(i);
         
         
 //get
- Intent intent = getIntent();
-        if (intent != null) {
-            dietPlanHashMap = (HashMap<String, String>) intent.getSerializableExtra(StringConstant.I_DIET_PLAN_HASHMAP);
-        }
+Intent intent = getIntent();
+if (intent != null) {
+ArrayList<LocationBean> myList = (ArrayList<LocationBean>) getIntent().getSerializableExtra("ARRAY_LIST");
+Log.d(TAG, "Size :: " + myList.size());
+}
