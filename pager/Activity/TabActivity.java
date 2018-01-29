@@ -19,10 +19,26 @@ public class TabActivity extends AppCompatActivity {
         SimpleFragmentPagerAdapter adapter = new SimpleFragmentPagerAdapter(this, getSupportFragmentManager());
 
         // Set the adapter onto the view pager
-        viewPager.setAdapter(adapter);
+       setupViewPager(viewPager);
 
         // Give the TabLayout the ViewPager
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
+    }
+    
+    
+    private void setupViewPager(ViewPager viewPager) {
+        // IMPORT V4 FRAGMENT AND FRAGMENT MANAGER
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), this);
+        Bundle b = new Bundle();
+
+        for (int i = 0; i < 6; i++) {
+            b.putString("Text", "String :" + i);
+            adapter.addFragment(new OneFragment(), "Tab " + i);
+            arrayList.add("ArrayList string :: " + i);
+
+        }
+        viewPager.setAdapter(adapter);
+
     }
 }
