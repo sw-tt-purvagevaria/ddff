@@ -63,3 +63,55 @@ if (intent != null) {
 ArrayList<LocationBean> myList = (ArrayList<LocationBean>) getIntent().getSerializableExtra("ARRAY_LIST");
 Log.d(TAG, "Size :: " + myList.size());
 }
+
+
+//call code
+private void callWS() {
+
+        if (!isNetworkAvailable(context)) {
+            RequestQueue mRequestQueue;
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, "",
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            error.printStackTrace();
+
+
+                        }
+                    }) {
+                @Override
+                protected Map<String, String> getParams() {
+               /* Map<String, String> param = new HashMap<String, String>();
+                String data = encodeKeyValues(strParams);
+                param.put("data", data);
+                Loger.d(TAG,"Data :: "+data);*/
+                    return HASHMAP;
+                }
+            };
+            mRequestQueue = Volley.newRequestQueue(context);
+            RetryPolicy policy = new DefaultRetryPolicy(15000 /*SECONDS*/, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+            stringRequest.setRetryPolicy(policy);
+            mRequestQueue.add(stringRequest);
+        } else {
+            Toast.makeText(context, "No internet connection", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    /**
+     * this method will check internet connection is available or not
+     *
+     * @param context
+     * @return
+     ***/
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }//end of isNetworkAvailable
