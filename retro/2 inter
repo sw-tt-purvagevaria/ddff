@@ -19,5 +19,12 @@ public interface Api {
 
     @GET("get_leaderboard_1.php?page_number=1&action=get_leaderboard&year=2017&last_rank=&month_number=12&member_id=65")
     Call<JsonObject> getObject();
+    
+    
+    
+    
+    
+    @GET("get_leaderboard_1.php?")
+    Call<JsonObject> getMyThing(@QueryMap Map<String, String> params);
 }
 
