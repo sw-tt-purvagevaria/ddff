@@ -67,6 +67,35 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "HeroList :: error");
             }
         });
+        
+        
+        
+        
+        HashMap<String, String> params = new HashMap<>();
+        params.put("action", "get_leaderboard");
+        params.put("page_number", "1");
+        params.put("last_rank", "21");
+        params.put("member_id", "65");
+        Call<JsonObject> callData = api.getMyThing(params);
+        callData.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                try {
+                    JSONObject profileFileUploadResponse = new JSONObject(String.valueOf(response.body()));
+
+                    Log.d(TAG, "Response :: " + profileFileUploadResponse);
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.d(TAG, "Response :: error");
+            }
+        });
 
     }
 }
