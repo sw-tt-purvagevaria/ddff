@@ -1,8 +1,7 @@
-package com.pg.testdemo;
 
+import android.app.AlertDialog;
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.content.DialogInterface;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
@@ -16,36 +15,36 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
+import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.pg.demowebservice.utils.NetworkUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by test on 11/10/17.
- */
-
+/***************************************************************************************************
+ * class name :: WebServiceHelper
+ * this class contain methods for calling web api and provide response to user
+ ***************************************************************************************************/
 public class WebServiceHelper {
 
     private static String TAG = "WebServiceHelper";
-    public static String STATUS;
-    public static String MESSAGE;
     public static String URL = "";
-    private static JSONObject HEADER;
-    public static JSONObject DATA_OBJECT;
-    public static JSONArray DATA_ARRAY;
+    
 
     private static Context context;
     private RequestQueue mRequestQueue;
 
+    File file;
 
     /**********************************************************************************************
      * WebServiceHelper
@@ -59,7 +58,10 @@ public class WebServiceHelper {
     }//end of WebServiceHelper()
 
 
-    
+    public void setTimeOutError() {
+
+
+    }
 
     /**********************************************************************************************
      * call ws and get the json data from ws
@@ -71,7 +73,6 @@ public class WebServiceHelper {
         urlForLog(postUrl, strParams);
         if (!isNetworkAvailable(context)) {
             handler.networkNotAvailable(false);
-            return;
         } else {
             handler.networkNotAvailable(true);
             StringRequest stringRequest = new StringRequest(Request.Method.POST, postUrl,
@@ -167,74 +168,31 @@ public class WebServiceHelper {
         }
     }//end of encodeString()
 
-    /**********************************************************************************************
-     * @param response
-     * @return
-     * @throws JSONException
-     ***********************************************************************************************/
-
-    public JSONObject getHeaderObject(JSONObject response) throws JSONException {
-        return response.optJSONObject("header");
-    }//end of getHeaderObject
-
-    /**********************************************************************************************
-     * @param jsonHeader
-     * @return
-     * @throws JSONException
-     ***********************************************************************************************/
-    public String getMessage(JSONObject jsonHeader) throws JSONException {
-        return jsonHeader.optString("message");
-    }//end of getMessage
-
-    /**********************************************************************************************
-     * @param jsonHeader
-     * @return
-     * @throws JSONException
-     ***********************************************************************************************/
-    public String getStatus(JSONObject jsonHeader) throws JSONException {
-        return jsonHeader.optString("status");
-    }//end of getStatus
-
-    /**********************************************************************************************
-     * @param response
-     * @return
-     * @throws JSONException
-     ***********************************************************************************************/
-    public JSONObject getDataObject(JSONObject response) throws JSONException {
-        return response.optJSONObject("data");
-    }//end of getDataObject
-
-    /**********************************************************************************************
-     * @param response
-     * @return
-     * @throws JSONException
-     ***********************************************************************************************/
-    public JSONArray getDataArray(JSONObject response) throws JSONException {
-        return response.optJSONArray("data");
-    }//end of getDataArray
+   
 
     /***********************************************************************************************
-     * parse the jsonObject and get all data inside json header
+     * Function to display simple Alert Dialog
      *
-     * @param response
-     ***********************************************************************************************/
-    public void parseJSONOResponse(String response) {
-        if (response != null) {
-            try {
-                JSONObject objResponse = new JSONObject(response);
-                HEADER = objResponse.optJSONObject("header");
-                DATA_OBJECT = objResponse.optJSONObject("data");
-                DATA_ARRAY = objResponse.optJSONArray("data");
-                if (HEADER != null) {
-                    STATUS = HEADER.optString("status");
-                    MESSAGE = HEADER.optString("message");
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }//end of parseJSONOResponse
+     * @param message - alert message
+     **********************************************************************************************/
+    public static void showAlertDialog(String message) {
+        AlertDialog alertDialog = new AlertDialog.Builder(context).create();
 
+        // Setting Dialog Title
+        alertDialog.setTitle("Alert Message");
+
+        // Setting Dialog Message
+        alertDialog.setMessage(message);
+
+        // Setting OK Button
+        alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+
+        // Showing Alert Message
+        alertDialog.show();
+    }//end of showAlertDialog
 
     /***********************************************************************************************
      * thus method will give the url from nameVale pair
@@ -282,6 +240,8 @@ public class WebServiceHelper {
                 Log.e(TAG, "tNoConnectionError");
             } else if (error instanceof AuthFailureError) {
                 Log.e(TAG, "AuthFailureError");
+            } else if (error instanceof ServerError) {
+                Log.e(TAG, "ServerError");
             } else if (error instanceof NetworkError) {
                 Log.e(TAG, "NetworkError");
 
@@ -304,8 +264,7 @@ public class WebServiceHelper {
         //  Toast.makeText(ParentActivity.this, msg, Toast.LENGTH_SHORT).show();
     }//end of showToast()
 
-
-    /***********************************************************************************************
+	/***********************************************************************************************
      * this method will check internet connection is available or not
      *
      * @param context
