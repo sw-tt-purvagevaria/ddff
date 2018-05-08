@@ -1,0 +1,44 @@
+Half rating
+
+  if (trainerModel.getAvgRating().isEmpty()) {
+            trainerRating = 0;
+        } else {
+            trainerRating = Double.parseDouble(trainerModel.getAvgRating());
+        }
+        ImageView[] rating = new ImageView[5];
+        int totalRating = 5;
+
+        double moduleRating = trainerRating % 1;
+        ArrayList rattingList = new ArrayList();
+        for (int i = 0; i < totalRating; i++) {
+            rattingList.add("fullStar");
+        }
+        int starPosition;
+        if (moduleRating > 0) {//half rating
+            starPosition = Double.valueOf(Math.floor(trainerRating)).intValue();
+            rattingList.set(starPosition, "halfStar");
+            for (int i = starPosition + 1; i < totalRating; i++) {
+                rattingList.set(i, "noStar");
+            }
+        } else {
+            starPosition = Double.valueOf(trainerRating).intValue();
+            for (int i = starPosition; i < totalRating; i++) {
+                rattingList.set(i, "noStar");
+            }
+        }
+        for (int i = 0; i < rattingList.size(); i++) {
+            View newView = LayoutInflater.from(context).inflate(R.layout.include_rating, null);
+            rating[i] = newView.findViewById(R.id.imgRating);
+
+            Loger.d(TAG, "star :: " + rattingList.get(i));
+            switch (rattingList.get(i) + "") {
+                case "fullStar":
+                    rating[i].setImageDrawable(context.getResources().getDrawable(R.drawable.rating_full));
+                    break;
+                case "halfStar":
+                    rating[i].setImageDrawable(context.getResources().getDrawable(R.drawable.rating_half));
+                    break;
+                case "noStar":
+                    rating[i].setImageDrawable(context.getResources().getDrawable(R.drawable.rating_empty));
+                    break;
+            }
