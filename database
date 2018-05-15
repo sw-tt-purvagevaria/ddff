@@ -9,3 +9,17 @@ CASE name
  END CustomerGroup
 FROM
  branch
+
+
+=========================================
+
+SELECT 
+full_address,
+substr(full_address, 1, 6)
+
+FROM 
+branch
+
+WHERE 
+LENGTH(name)>0
+
