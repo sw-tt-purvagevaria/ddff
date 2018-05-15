@@ -1,0 +1,11 @@
+SELECT
+ full_address,
+ id,
+CASE name
+ WHEN 'hebatpur' THEN
+ 'Dosmetic'
+ ELSE
+ 'Foreign'
+ END CustomerGroup
+FROM
+ branch
