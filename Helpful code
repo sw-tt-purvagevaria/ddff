@@ -42,3 +42,96 @@ Half rating
                     rating[i].setImageDrawable(context.getResources().getDrawable(R.drawable.rating_empty));
                     break;
             }
+
+
+
+
+
+
+
+
+  getVibrationControlData(0, 1, 0, 0, 25, "10",
+                        25,
+                        "60", "60")
+ 
+ fun getVibrationControlData(patternId: Int,
+                                frequencyType: Int,
+                                frequencyMinValue: Int,
+                                frequencyMaxValue: Int,
+                                frequency1: Int,
+                                stepTime: String,
+                                intensity: Int,
+                                onTime: String,
+                                offTime: String) {
+        var commandData = ""
+        var patternIdInCommand = String.format("%0" + 8 + "X", patternId)
+        commandData = "Pattern " + "$commandData $patternIdInCommand"
+
+
+        var freq = getFrequencyValue(frequency1)
+        var freqMin = getFrequencyValue(frequencyMinValue)
+        var freqMax = getFrequencyValue(frequencyMaxValue)
+
+        var ampltitude = intensity * 100
+        var onTimeToPass = onTime.toInt() * 60
+        var offTimeToPass = offTime.toInt() * 60
+
+
+        var cycle = ""
+        cycle = if (frequencyType == 1) {
+            "0000"
+        } else if (frequencyType == 2) {
+            String.format("%0" + 4 + "X", 5)
+        } else {
+            String.format("%0" + 4 + "X", 2)
+        }
+        commandData = commandData + " " + "Cycle " + cycle
+
+        var strpTimeToPass = ""
+        if (frequencyType != 1) {
+            strpTimeToPass = String.format("%0" + 4 + "X", stepTime.toFloat() * 60)
+        } else {
+            strpTimeToPass = String.format("%0" + 4 + "X", 0)
+        }
+        commandData = commandData + " " + "strpTimeToPass " + strpTimeToPass
+
+        var frequencyData = ""
+        if (frequencyType == 1) {
+            frequencyData = String.format("%0" + 4 + "X", freq)
+        } else {
+            frequencyData = String.format("%0" + 4 + "X", freq)
+        }
+        commandData = commandData + " " + "frequencyData " + frequencyData
+
+        var applitudeData = String.format("%0" + 4 + "X", ampltitude)
+        commandData = commandData + " " + "applitudeData " + applitudeData
+
+        var frequencyminData = ""
+        if (frequencyType != 1) {
+            frequencyminData = String.format("%0" + 4 + "X", freqMin)
+        } else {
+            frequencyminData = frequencyData
+        }
+        commandData = commandData + " " + "frequencyminData " + frequencyminData
+
+        var frequencymaxData = ""
+        if (frequencyType != 1) {
+            frequencymaxData = String.format("%0" + 4 + "X", freqMax)
+        } else {
+            frequencymaxData = frequencyData
+        }
+        commandData = commandData + " " + " frequencymaxData " + frequencymaxData
+
+
+        commandData = commandData + " " + "  applitudeData " + applitudeData + "  applitudeData " + applitudeData
+
+        var onTimeData = String.format("%0" + 4 + "X", onTimeToPass)
+        commandData = commandData + " onTimeToPass " + onTimeToPass
+
+        var offTimeData = String.format("%0" + 4 + "X", offTimeToPass)
+        commandData = commandData + " offTimeToPass " + offTimeToPass
+
+
+        AndroidLog.d(TAG, "Full data :: $commandData")
+
+    }
