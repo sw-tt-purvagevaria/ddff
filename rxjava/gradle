@@ -18,7 +18,26 @@
     implementation "com.google.android.material:material:$rootProject.version_materialDesign"
     
     
-    
+    ext {
+    versions_appcompat = '1.0.2'
+    versions_constraintLayout = '2.0.0-alpha2'
+    versions_gson = '2.8.5'
+    versions_retrofit = '2.5.0'
+    versions_arch_core = "2.0.0"
+    versions_room = "2.1.0-alpha03"
+    versions_lifecycle = "2.0.0"
+    versions_nav = "1.0.0-alpha09"
+    versions_rxjavaAndroid = "2.1.0"
+    versions_rxjava = "2.2.6"
+    version_materialDesign="1.0.0"
+    version_zxing="3.6.0"
+    version_eventbus="3.1.1"
+
+}
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+
      dataBinding {
         enabled = true
     }
