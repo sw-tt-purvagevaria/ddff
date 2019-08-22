@@ -1,0 +1,28 @@
+  /*Retrofit dependencies*/
+    //retrofit
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.versions_retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.versions_retrofit"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.versions_retrofit"
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.0'
+    
+    
+     //gson
+    implementation "com.google.code.gson:gson:$rootProject.versions_gson"
+
+    //rxjava
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.versions_rxjavaAndroid"
+    implementation "io.reactivex.rxjava2:rxjava:$rootProject.versions_rxjava"
+
+
+ implementation "androidx.appcompat:appcompat:$rootProject.versions_appcompat"
+    implementation "com.google.android.material:material:$rootProject.version_materialDesign"
+    
+    
+    
+     dataBinding {
+        enabled = true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
